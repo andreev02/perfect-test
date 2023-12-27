@@ -2,13 +2,15 @@
 
 namespace App\Http\Requests\Api;
 
-use App\Http\Controllers\ApiController;
+use App\Traits\ApiResponse;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ConvertRequest extends FormRequest
 {
+    use ApiResponse;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -33,6 +35,6 @@ class ConvertRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
 	{
-		throw new HttpResponseException(ApiController::makeError('Invalid token', 403));
+		throw new HttpResponseException($this->sendError('Invalid token', 403));
 	}
 }
