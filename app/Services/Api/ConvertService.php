@@ -11,7 +11,7 @@ class ConvertService
     public function convert($data)
     {
         if ($data['currency_from'] != 'BTC' && $data['currency_to'] != 'BTC') {
-            throw new Exception('Invalid token');;
+            throw new Exception('Invalid token');
         }
 
         $currencies = json_decode(file_get_contents('https://blockchain.info/ticker'), true);
