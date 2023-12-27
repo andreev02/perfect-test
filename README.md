@@ -3,7 +3,7 @@
 ## Description
 Это тестовое задание для <b>Perfect Panel, Севастополь</b>
 
-Вы можете отправить запросы сюда: <a href="http://app.itandreev.ru/api/v1">http://app.itandreev.ru/api/v1</a> (Bearer token: defualt)
+Вы можете отправить запросы сюда: <a href="http://app.itandreev.ru/api/v1">http://app.itandreev.ru/api/v1</a> (Bearer token: default)
 
 ## SQL Task
 Необходимо написать запрос выборки данных из представленных таблиц,
