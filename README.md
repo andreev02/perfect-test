@@ -1,66 +1,70 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://i.imgur.com/YLqPT0A.png" target="_blank"><img src="https://i.imgur.com/YLqPT0A.png" width="800" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Description
+Это тестовое задание для <b>Perfect Panel, Севастополь</b>
 
-## About Laravel
+Вы можете отправить запросы сюда: <a href="http://app.itandreev.ru/api/v1">http://app.itandreev.ru/api/v1</a>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## SQL Task
+Необходимо написать запрос выборки данных из представленных таблиц,
+который найдет и выведет всех посетителей библиотеки, возраст которых
+попадает в диапазон от 7 и до 17 лет, которые взяли две книги одного автора
+(взяли всего 2 книги и они одного автора), книги были у них в руках не более
+двух календарных недель (не просрочили 2-х недельный срок пользования).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<b>Формат вывода:</b><br>
+ID, Name (first_name last_name), Author, Books (Book 1, Book 2, ...)<br>
+1; Ivan Ivanov; Leo Tolstoy; Book 1, Book 2
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+SELECT
+	CONCAT(users.id, '; ', users.first_name, ' ', users.last_name, '; ', GROUP_CONCAT(books.name SEPARATOR ', ')) result
+FROM users
+JOIN user_books ON users.id = user_books.user_id
+JOIN books ON books.id = user_books.book_id
+WHERE TIMESTAMPDIFF(YEAR, users.birthday, CURRENT_DATE) BETWEEN 7 AND 17
+AND TIMESTAMPDIFF(DAY, user_books.get_date, user_books.return_date) < 14
+GROUP BY users.id
+HAVING COUNT(books.id) = 2 AND COUNT(DISTINCT books.author) = 1;
+```
 
-## Learning Laravel
+## RESTful API Task
+Необходимо реализовать JSON API сервис на языке php 8 (можно использовать
+любой php framework) для работы с курсами обмена валют для биткоина (BTC).
+Реализовать необходимо с помощью Docker.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Все методы API будут доступны только после авторизации, т.е. все методы должны
+быть по умолчанию не доступны и отдавать ошибку авторизации.
+Для авторизации будет использоваться фиксированный токен (64 символа
+включающих в себя a-z A-Z 0-9 а так-же символы - и _ ), передавать его будем в
+заголовках запросов. Тип Authorization: Bearer.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+<b>Формат запросов:</b><br>
+<your_domain>/api/v1?method=<method_name>&<parameter>=<value><br>
+Формат ответа API: JSON (все ответы при любых сценариях должны иметь JSON
+формат)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Все значения курса обмена должны считаться учитывая нашу комиссию = 2%
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### * Installation
+```
+git clone https://github.com/andreev02/perfect-test.git
+cd perfect-test
+composer install
+```
+Добавим api токен в <b>.env</b> (по умолчанию: <b>default<b>)
+```
+API_TOKEN=<your token>
+```
+Docker:
+```
+docker compose up -d
+```
+Или внешне:
+```
+php artisan serve
+```
+### * Tests
+```
+php artisan test Tests\Feature\ApiTest.php
+```
