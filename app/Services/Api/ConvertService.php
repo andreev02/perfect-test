@@ -26,7 +26,7 @@ class ConvertService
             
             $rate = $currencies[$data['currency_to']]['last'];
             $result = $data['value'] * $rate;
-            $converted_value = round($result - ($result * self::COMISSION_PERCENT), 2);
+            $converted_value = number_format($result - ($result * self::COMISSION_PERCENT), 2, '.', '');
         }
         else
         {
@@ -36,7 +36,7 @@ class ConvertService
 
             $rate = $currencies[$data['currency_from']]['last'];
             $result = fdiv($data['value'], $rate);
-            $converted_value = round($result - ($result * self::COMISSION_PERCENT), 10);
+            $converted_value = number_format($result - ($result * self::COMISSION_PERCENT), 10, '.', '');
         }
 
         return [
