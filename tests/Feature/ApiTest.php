@@ -41,7 +41,7 @@ class ApiTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function testConvertFromUSDToBTC(): void
+    public function testConvertFromUsdToBtc(): void
     {
         $response = $this->post('/api/v1', [
             'method' => 'convert',
@@ -53,7 +53,7 @@ class ApiTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testConvertFromBTCToUSD(): void
+    public function testConvertFromBtcToUsd(): void
     {
         $response = $this->post('/api/v1', [
             'method' => 'convert',
