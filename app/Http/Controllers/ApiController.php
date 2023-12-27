@@ -7,6 +7,7 @@ use App\Http\Requests\Api\RatesRequest;
 use App\Services\Api\ConvertService;
 use App\Services\Api\RatesService;
 use App\Traits\ApiResponse;
+use Exception;
 
 class ApiController extends Controller
 {
@@ -16,12 +17,13 @@ class ApiController extends Controller
     {
         $data = $request->validated();
 
-        $result = (new RatesService())->rates($data);
-        
-        if (is_null($result)) {
-            return $this->sendError('Invalid token', 403);
+        try {
+            $result = (new RatesService())->rates($data);
         }
-
+        catch (Exception $e) {
+            return $this->sendError($e->getMessage(), 403);
+        }
+        
         return $this->sendResponse($result, 200);
     }
 
@@ -29,12 +31,13 @@ class ApiController extends Controller
     {
         $data = $request->validated();
         
-        $result = (new ConvertService())->convert($data);
-        
-        if (is_null($result)) {
-            return $this->sendResponse('Invalid token', 403);
+        try {
+            $result = (new ConvertService())->convert($data);
         }
-
+        catch (Exception $e) {
+            return $this->sendError($e->getMessage(), 403);
+        }
+        
         return $this->sendResponse($result, 200);
     }        
 }

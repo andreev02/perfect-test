@@ -2,6 +2,8 @@
 
 namespace App\Services\Api;
 
+use Exception;
+
 class RatesService
 {
     const COMISSION_PERCENT = 0.02;
@@ -16,7 +18,7 @@ class RatesService
             
             foreach($currency as $value) {
                 if (!in_array($value, array_keys($currencies))) {
-                    return null;
+                    throw new Exception('Invalid token');
                 }
             }
 

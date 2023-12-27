@@ -2,6 +2,8 @@
 
 namespace App\Services\Api;
 
+use Exception;
+
 class ConvertService
 {
     const COMISSION_PERCENT = 0.02;
@@ -9,7 +11,7 @@ class ConvertService
     public function convert($data)
     {
         if ($data['currency_from'] != 'BTC' && $data['currency_to'] != 'BTC') {
-            return null;
+            throw new Exception('Invalid token');;
         }
 
         $currencies = json_decode(file_get_contents('https://blockchain.info/ticker'), true);
@@ -19,7 +21,7 @@ class ConvertService
         if ($data['currency_from'] == 'BTC')
         {
             if (!in_array($data['currency_to'], array_keys($currencies))) {
-                return null;
+                throw new Exception('Invalid token');
             }
             
             $rate = $currencies[$data['currency_to']]['last'];
@@ -29,7 +31,7 @@ class ConvertService
         else
         {
             if (!in_array($data['currency_from'], array_keys($currencies))) {
-                return null;
+                throw new Exception('Invalid token');
             }
 
             $rate = $currencies[$data['currency_from']]['last'];
