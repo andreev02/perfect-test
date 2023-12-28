@@ -21,20 +21,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('v1', function (Request $request) {
+Route::middleware('api')->prefix('v1')->group(function() {
+    Route::get('/', function (Request $request) {
 
-    if ($request->get('method') == 'rates') {
-        return call_user_func([new ApiController(), 'rates'], app()->make(RatesRequest::class));
-    }
+        if ($request->get('method') == 'rates') {
+            return call_user_func([new ApiController(), 'rates'], app()->make(RatesRequest::class));
+        }
+    
+        return ApiController::makeError('Invalid method', 403);
+    });
 
-    return ApiController::makeError('Invalid method', 403);
-});
-
-Route::post('v1', function (Request $request) {
+    Route::post('/', function (Request $request) {
        
-    if ($request->post('method') == 'convert') {
-        return call_user_func([new ApiController(), 'convert'], app()->make(ConvertRequest::class));
-    }
-
-    return ApiController::makeError('Invalid method', 403);
+        if ($request->post('method') == 'convert') {
+            return call_user_func([new ApiController(), 'convert'], app()->make(ConvertRequest::class));
+        }
+    
+        return ApiController::makeError('Invalid method', 403);
+    });
 });
