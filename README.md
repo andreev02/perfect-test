@@ -50,7 +50,9 @@ HAVING COUNT(books.id) = 2 AND COUNT(DISTINCT books.author) = 1;
 ```
 git clone https://github.com/andreev02/perfect-test.git
 cd perfect-test
+
 composer install
+php artisan key:generate
 ```
 Добавим api токен в <b>.env</b> (по умолчанию: <b>default<b>)
 ```
